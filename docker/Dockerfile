@@ -43,7 +43,9 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-gmapping ros-noetic-navigation ros-noetic-interactive-markers \
     ros-noetic-dynamixel-sdk \
     ros-noetic-novatel-gps-driver\
+    ros-noetic-geographic-msgs\
     ros-noetic-turtlebot3-msgs \
+    zstd\
     ros-noetic-turtlebot3 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -59,6 +61,16 @@ RUN mkdir -p /root/catkin_ws/src
 RUN cd /root/catkin_ws/src && git clone https://github.com/bsb808/geonav_transform.git
 RUN cd /root/catkin_ws && /bin/zsh -c "source /opt/ros/noetic/setup.sh; catkin_make"
 RUN echo "source /root/catkin_ws/devel/setup.zsh" >> /root/.zshrc
+
+# Add Arena SDK
+RUN cd /root && git clone https://github.com/dleliuhin/ArenaSDK.git
+RUN cd /root/ArenaSDK && sh Arena_SDK.conf
+RUN echo "export ARENA_ROOT=~/ArenaSDK" >> /root/.zshrc && source /root/.zshrc
+
+# Add ZED SDK
+RUN cd /root && wget https://download.stereolabs.com/zedsdk/3.8/cu117/ubuntu20
+RUN chmod +x /root/ubuntu20
+RUN /root/ubuntu20 -- silent
 
 # Clone the final project repository
 RUN cd /root/catkin_ws/src && git clone https://github.com/miki-yuasa/ece484_final_proj.git

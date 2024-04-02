@@ -18,7 +18,7 @@ services:
       - $HOME/.Xauthority:/root/.Xauthority:rw
       - /home/miki/docker:/root/catkin_ws/src
     tty: true
-    command: zsh -c "source /root/catkin_ws/devel/setup.zsh"
+    command: zsh -c "source /root/catkin_ws/devel/setup.zsh;zsh"
     network_mode: "host"
     extra_hosts:
       - "host:127.0.0.1" # Seems that this might be needed for ROS networking

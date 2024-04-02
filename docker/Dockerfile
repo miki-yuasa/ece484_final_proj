@@ -56,6 +56,7 @@ RUN apt-get install ros-noetic-pacmod3-msgs
 # Create ROS workspace
 RUN echo "source /opt/ros/noetic/setup.zsh" >> /root/.zshrc
 RUN mkdir -p /root/catkin_ws/src
+RUN cd /root/catkin_ws/src && git clone https://github.com/bsb808/geonav_transform.git
 RUN cd /root/catkin_ws && /bin/zsh -c "source /opt/ros/noetic/setup.sh; catkin_make"
 RUN echo "source /root/catkin_ws/devel/setup.zsh" >> /root/.zshrc
 

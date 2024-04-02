@@ -42,9 +42,16 @@ RUN apt-get update && apt-get install -y \
     ros-noetic-compressed-image-transport ros-noetic-rqt ros-noetic-rviz \
     ros-noetic-gmapping ros-noetic-navigation ros-noetic-interactive-markers \
     ros-noetic-dynamixel-sdk \
+    ros-noetic-novatel-gps-driver\
     ros-noetic-turtlebot3-msgs \
     ros-noetic-turtlebot3 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install additional packages
+RUN apt-get install apt-transport-https
+RUN sh -c 'echo "deb [trusted=yes] https://s3.amazonaws.com/autonomoustuff-repo/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/autonomoustuff-public.list'
+RUN apt-get update
+RUN apt-get install ros-noetic-pacmod3-msgs  
 
 # Create ROS workspace
 RUN echo "source /opt/ros/noetic/setup.zsh" >> /root/.zshrc

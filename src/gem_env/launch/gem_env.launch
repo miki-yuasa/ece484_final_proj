@@ -27,7 +27,6 @@
   </include>
 
   <!-- RViz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gem_description)/config_rviz/gem_velodyne.rviz" />
 
 </launch>
 

@@ -4,6 +4,23 @@ from gazebo_msgs.srv import SetModelState
 from gazebo_msgs.srv import GetModelState
 import numpy as np
 
+def getModelState():
+    rospy.wait_for_service('/gazebo/get_model_state')
+    try:
+        serviceResponse = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
+        modelState = serviceResponse(model_name='gem')
+    except rospy.ServiceException as exc:
+        rospy.loginfo("Service did not process request: "+str(exc))
+    return modelState
+
+def setModelState(model_state):
+    rospy.wait_for_service('/gazebo/set_model_state')
+    try:
+        set_state = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
+        resp = set_state(model_state)
+    except rospy.ServiceException as e:
+        rospy.loginfo("Service did not process request: "+str(e))
+
 def set_position(x = 0,y = 0, yaw=0):
     
     rospy.init_node("set_pos")
